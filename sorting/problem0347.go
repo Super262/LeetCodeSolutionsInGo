@@ -6,23 +6,23 @@ func topKFrequent(nums []int, k int) []int {
 		numToFreq[num] = numToFreq[num] + 1
 	}
 	numsLen := len(nums)
-	freqToNum := make([][]int, numsLen+1, numsLen+1)
+	freqBuckets := make([][]int, numsLen+1, numsLen+1)
 	for num, freq := range numToFreq {
-		if freqToNum[freq] == nil {
-			freqToNum[freq] = make([]int, 0)
+		if freqBuckets[freq] == nil {
+			freqBuckets[freq] = make([]int, 0)
 		}
-		freqToNum[freq] = append(freqToNum[freq], num)
+		freqBuckets[freq] = append(freqBuckets[freq], num)
 	}
 	result := make([]int, 0)
 	for i := numsLen; i >= 0; i-- {
-		if freqToNum[i] != nil {
+		if freqBuckets[i] != nil {
 			resultLen := len(result)
 			if resultLen < k {
 				dis := k - resultLen
-				if len(freqToNum[i]) <= dis {
-					result = append(result, freqToNum[i]...)
+				if len(freqBuckets[i]) <= dis {
+					result = append(result, freqBuckets[i]...)
 				} else {
-					result = append(result, freqToNum[i][0:dis]...)
+					result = append(result, freqBuckets[i][0:dis]...)
 				}
 			} else {
 				break
