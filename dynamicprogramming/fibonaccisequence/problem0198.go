@@ -1,6 +1,6 @@
 package fibonaccisequence
 
-func rob(nums []int) int {
+func rob0198(nums []int) int {
 	if nums == nil {
 		return 0
 	}
