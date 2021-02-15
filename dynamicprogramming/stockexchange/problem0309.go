@@ -8,7 +8,7 @@ func getMaxInt0309(a int, b int) int {
 	}
 }
 
-func maxProfit(prices []int) int {
+func maxProfit1(prices []int) int {
 	if prices == nil {
 		return 0
 	}
