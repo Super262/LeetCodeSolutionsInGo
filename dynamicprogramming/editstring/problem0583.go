@@ -8,7 +8,7 @@ func getMinInt0583(a int, b int) int {
 	}
 }
 
-func minDistance(word1 string, word2 string) int {
+func minDistance1(word1 string, word2 string) int {
 	word1Array := []rune(word1)
 	word2Array := []rune(word2)
 	word1Len := len(word1Array)
