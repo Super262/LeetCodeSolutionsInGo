@@ -1,6 +1,7 @@
 package doublepointers
 
 func moveZeroes(nums []int) {
+	// Minimize the total number of operations!
 	if nums == nil || len(nums) == 0 {
 		return
 	}
