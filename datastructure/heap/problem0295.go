@@ -3,13 +3,13 @@ package heap
 import "container/heap"
 
 type MedianFinder struct {
-	minHeap *MinHeap
-	maxHeap *MaxHeap
+	minHeap *MinHeap0295
+	maxHeap *MaxHeap0295
 }
 
 /** initialize your data structure here. */
 func Constructor() MedianFinder {
-	finder := MedianFinder{minHeap: &MinHeap{}, maxHeap: &MaxHeap{}}
+	finder := MedianFinder{minHeap: &MinHeap0295{}, maxHeap: &MaxHeap0295{}}
 	heap.Init(finder.minHeap)
 	heap.Init(finder.maxHeap)
 	return finder
@@ -41,17 +41,17 @@ func (this *MedianFinder) Balance() {
 	}
 }
 
-type MaxHeap []int // 定义一个类型
+type MaxHeap0295 []int // 定义一个类型
 
-func (h MaxHeap) Len() int { return len(h) } // 绑定len方法,返回长度
-func (h MaxHeap) Less(i, j int) bool { // 绑定less方法
+func (h MaxHeap0295) Len() int { return len(h) } // 绑定len方法,返回长度
+func (h MaxHeap0295) Less(i, j int) bool { // 绑定less方法
 	return h[i] > h[j] // 如果h[i]<h[j]生成的就是小根堆，如果h[i]>h[j]生成的就是大根堆
 }
-func (h MaxHeap) Swap(i, j int) { // 绑定swap方法，交换两个元素位置
+func (h MaxHeap0295) Swap(i, j int) { // 绑定swap方法，交换两个元素位置
 	h[i], h[j] = h[j], h[i]
 }
 
-func (h *MaxHeap) Pop() interface{} { // 绑定pop方法，从最后拿出一个元素并返回
+func (h *MaxHeap0295) Pop() interface{} { // 绑定pop方法，从最后拿出一个元素并返回
 	old := *h
 	n := len(old)
 	x := old[n-1]
@@ -59,25 +59,25 @@ func (h *MaxHeap) Pop() interface{} { // 绑定pop方法，从最后拿出一个
 	return x
 }
 
-func (h *MaxHeap) Push(x interface{}) { // 绑定push方法，插入新元素
+func (h *MaxHeap0295) Push(x interface{}) { // 绑定push方法，插入新元素
 	*h = append(*h, x.(int))
 }
 
-func (this *MaxHeap) Peek() interface{} {
+func (this *MaxHeap0295) Peek() interface{} {
 	return (*this)[0]
 }
 
-type MinHeap []int // 定义一个类型
+type MinHeap0295 []int // 定义一个类型
 
-func (h MinHeap) Len() int { return len(h) } // 绑定len方法,返回长度
-func (h MinHeap) Less(i, j int) bool { // 绑定less方法
+func (h MinHeap0295) Len() int { return len(h) } // 绑定len方法,返回长度
+func (h MinHeap0295) Less(i, j int) bool { // 绑定less方法
 	return h[i] < h[j] // 如果h[i]<h[j]生成的就是小根堆，如果h[i]>h[j]生成的就是大根堆
 }
-func (h MinHeap) Swap(i, j int) { // 绑定swap方法，交换两个元素位置
+func (h MinHeap0295) Swap(i, j int) { // 绑定swap方法，交换两个元素位置
 	h[i], h[j] = h[j], h[i]
 }
 
-func (h *MinHeap) Pop() interface{} { // 绑定pop方法，从最后拿出一个元素并返回
+func (h *MinHeap0295) Pop() interface{} { // 绑定pop方法，从最后拿出一个元素并返回
 	old := *h
 	n := len(old)
 	x := old[n-1]
@@ -85,11 +85,11 @@ func (h *MinHeap) Pop() interface{} { // 绑定pop方法，从最后拿出一个
 	return x
 }
 
-func (h *MinHeap) Push(x interface{}) { // 绑定push方法，插入新元素
+func (h *MinHeap0295) Push(x interface{}) { // 绑定push方法，插入新元素
 	*h = append(*h, x.(int))
 }
 
-func (this *MinHeap) Peek() interface{} {
+func (this *MinHeap0295) Peek() interface{} {
 	return (*this)[0]
 }
 
