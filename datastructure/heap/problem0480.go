@@ -39,149 +39,149 @@ func Constructor0480() *DualHeap0480 {
 	return &dualHeap
 }
 
-func (this *DualHeap0480) Add(num int) {
-	if this.smallerSize == 0 || this.smallerNums.Len() == 0 || num <= this.smallerNums.Peek().(int) {
-		heap.Push(&this.smallerNums, num)
-		this.smallerSize++
+func (dualHeap *DualHeap0480) Add(num int) {
+	if dualHeap.smallerSize == 0 || dualHeap.smallerNums.Len() == 0 || num <= dualHeap.smallerNums.Peek().(int) {
+		heap.Push(&dualHeap.smallerNums, num)
+		dualHeap.smallerSize++
 	} else {
-		heap.Push(&this.largerNums, num)
-		this.largerSize++
+		heap.Push(&dualHeap.largerNums, num)
+		dualHeap.largerSize++
 	}
-	this.BalanceTwoParts()
+	dualHeap.BalanceTwoParts()
 }
 
-func (this *DualHeap0480) Remove(num int) {
-	this.PushDeletion(num)
-	if this.smallerSize > 0 && this.smallerNums.Len() > 0 && num <= this.smallerNums.Peek().(int) {
-		this.smallerSize--
-		this.CleanAndAlignSmaller()
-	} else if this.largerSize > 0 {
-		this.largerSize--
-		this.CleanAndAlignLarger()
+func (dualHeap *DualHeap0480) Remove(num int) {
+	dualHeap.PushDeletion(num)
+	if dualHeap.smallerSize > 0 && dualHeap.smallerNums.Len() > 0 && num <= dualHeap.smallerNums.Peek().(int) {
+		dualHeap.smallerSize--
+		dualHeap.CleanAndAlignSmaller()
+	} else if dualHeap.largerSize > 0 {
+		dualHeap.largerSize--
+		dualHeap.CleanAndAlignLarger()
 	}
-	this.BalanceTwoParts()
+	dualHeap.BalanceTwoParts()
 }
 
-func (this *DualHeap0480) GetMedian() float64 {
-	if this.smallerSize == this.largerSize && this.smallerNums.Len() > 0 && this.largerNums.Len() > 0 {
-		return (float64(this.smallerNums.Peek().(int)) + float64(this.largerNums.Peek().(int))) / 2.0
-	} else if this.smallerNums.Len() > 0 {
-		return float64(this.smallerNums.Peek().(int))
+func (dualHeap *DualHeap0480) GetMedian() float64 {
+	if dualHeap.smallerSize == dualHeap.largerSize && dualHeap.smallerNums.Len() > 0 && dualHeap.largerNums.Len() > 0 {
+		return (float64(dualHeap.smallerNums.Peek().(int)) + float64(dualHeap.largerNums.Peek().(int))) / 2.0
+	} else if dualHeap.smallerNums.Len() > 0 {
+		return float64(dualHeap.smallerNums.Peek().(int))
 	}
 	return math.MinInt32
 }
 
-func (this *DualHeap0480) BalanceTwoParts() {
-	for this.largerNums.Len() > 0 && this.smallerSize < this.largerSize {
-		heap.Push(&this.smallerNums, heap.Pop(&this.largerNums))
-		this.smallerSize++
-		this.largerSize--
-		this.CleanAndAlignLarger()
+func (dualHeap *DualHeap0480) BalanceTwoParts() {
+	for dualHeap.largerNums.Len() > 0 && dualHeap.smallerSize < dualHeap.largerSize {
+		heap.Push(&dualHeap.smallerNums, heap.Pop(&dualHeap.largerNums))
+		dualHeap.smallerSize++
+		dualHeap.largerSize--
+		dualHeap.CleanAndAlignLarger()
 	}
-	for this.smallerNums.Len() > 0 && this.smallerSize > this.largerSize+1 {
-		heap.Push(&this.largerNums, heap.Pop(&this.smallerNums))
-		this.largerSize++
-		this.smallerSize--
-		this.CleanAndAlignSmaller()
+	for dualHeap.smallerNums.Len() > 0 && dualHeap.smallerSize > dualHeap.largerSize+1 {
+		heap.Push(&dualHeap.largerNums, heap.Pop(&dualHeap.smallerNums))
+		dualHeap.largerSize++
+		dualHeap.smallerSize--
+		dualHeap.CleanAndAlignSmaller()
 	}
 }
 
-func (this *DualHeap0480) CleanAndAlignLarger() {
+func (dualHeap *DualHeap0480) CleanAndAlignLarger() {
 	peekValue := 0
-	for this.largerNums.Len() > 0 {
-		peekValue = this.largerNums.Peek().(int)
-		if !this.PollDeletion(peekValue) {
+	for dualHeap.largerNums.Len() > 0 {
+		peekValue = dualHeap.largerNums.Peek().(int)
+		if !dualHeap.PollDeletion(peekValue) {
 			break
 		}
-		heap.Pop(&this.largerNums)
+		heap.Pop(&dualHeap.largerNums)
 	}
 }
 
-func (this *DualHeap0480) CleanAndAlignSmaller() {
+func (dualHeap *DualHeap0480) CleanAndAlignSmaller() {
 	peekValue := 0
-	for this.smallerNums.Len() > 0 {
-		peekValue = this.smallerNums.Peek().(int)
-		if !this.PollDeletion(peekValue) {
+	for dualHeap.smallerNums.Len() > 0 {
+		peekValue = dualHeap.smallerNums.Peek().(int)
+		if !dualHeap.PollDeletion(peekValue) {
 			break
 		}
-		heap.Pop(&this.smallerNums)
+		heap.Pop(&dualHeap.smallerNums)
 	}
 }
 
-func (this *DualHeap0480) PollDeletion(key int) bool {
-	remainsCount, existed := (this.delayedRemovals)[key]
+func (dualHeap *DualHeap0480) PollDeletion(key int) bool {
+	remainsCount, existed := (dualHeap.delayedRemovals)[key]
 	if !existed {
 		return false
 	}
 	if remainsCount == 1 {
-		delete(this.delayedRemovals, key)
+		delete(dualHeap.delayedRemovals, key)
 	} else {
-		(this.delayedRemovals)[key] = remainsCount - 1
+		(dualHeap.delayedRemovals)[key] = remainsCount - 1
 	}
 	return true
 }
 
-func (this *DualHeap0480) PushDeletion(key int) {
-	remainsCount, existed := (this.delayedRemovals)[key]
+func (dualHeap *DualHeap0480) PushDeletion(key int) {
+	remainsCount, existed := (dualHeap.delayedRemovals)[key]
 	if existed {
-		(this.delayedRemovals)[key] = remainsCount + 1
+		(dualHeap.delayedRemovals)[key] = remainsCount + 1
 	} else {
-		(this.delayedRemovals)[key] = 1
+		(dualHeap.delayedRemovals)[key] = 1
 	}
 }
 
 type MaxHeap0480 []int // 定义一个类型
 
-func (h MaxHeap0480) Len() int {
-	return len(h) // 绑定len方法,返回长度
+func (maxHeap MaxHeap0480) Len() int {
+	return len(maxHeap) // 绑定len方法,返回长度
 }
-func (h MaxHeap0480) Less(i, j int) bool { // 绑定less方法
-	return h[i] > h[j] // 如果h[i]<h[j]生成的就是小根堆，如果h[i]>h[j]生成的就是大根堆
+func (maxHeap MaxHeap0480) Less(i, j int) bool { // 绑定less方法
+	return maxHeap[i] > maxHeap[j] // 如果h[i]<maxHeap[j]生成的就是小根堆，如果h[i]>maxHeap[j]生成的就是大根堆
 }
-func (h MaxHeap0480) Swap(i, j int) { // 绑定swap方法，交换两个元素位置
-	h[i], h[j] = h[j], h[i]
+func (maxHeap MaxHeap0480) Swap(i, j int) { // 绑定swap方法，交换两个元素位置
+	maxHeap[i], maxHeap[j] = maxHeap[j], maxHeap[i]
 }
 
-func (h *MaxHeap0480) Pop() interface{} { // 绑定pop方法，从最后拿出一个元素并返回
-	old := *h
+func (maxHeap *MaxHeap0480) Pop() interface{} { // 绑定pop方法，从最后拿出一个元素并返回
+	old := *maxHeap
 	n := len(old)
 	x := old[n-1]
-	*h = old[0 : n-1]
+	*maxHeap = old[0 : n-1]
 	return x
 }
 
-func (h *MaxHeap0480) Push(x interface{}) { // 绑定push方法，插入新元素
-	*h = append(*h, x.(int))
+func (maxHeap *MaxHeap0480) Push(x interface{}) { // 绑定push方法，插入新元素
+	*maxHeap = append(*maxHeap, x.(int))
 }
 
-func (this *MaxHeap0480) Peek() interface{} {
-	return (*this)[0]
+func (maxHeap *MaxHeap0480) Peek() interface{} {
+	return (*maxHeap)[0]
 }
 
 type MinHeap0480 []int // 定义一个类型
 
-func (h MinHeap0480) Len() int {
-	return len(h) // 绑定len方法,返回长度
+func (minHeap MinHeap0480) Len() int {
+	return len(minHeap) // 绑定len方法,返回长度
 }
-func (h MinHeap0480) Less(i, j int) bool { // 绑定less方法
-	return h[i] < h[j] // 如果h[i]<h[j]生成的就是小根堆，如果h[i]>h[j]生成的就是大根堆
+func (minHeap MinHeap0480) Less(i, j int) bool { // 绑定less方法
+	return minHeap[i] < minHeap[j] // 如果h[i]<minHeap[j]生成的就是小根堆，如果h[i]>minHeap[j]生成的就是大根堆
 }
-func (h MinHeap0480) Swap(i, j int) { // 绑定swap方法，交换两个元素位置
-	h[i], h[j] = h[j], h[i]
+func (minHeap MinHeap0480) Swap(i, j int) { // 绑定swap方法，交换两个元素位置
+	minHeap[i], minHeap[j] = minHeap[j], minHeap[i]
 }
 
-func (h *MinHeap0480) Pop() interface{} { // 绑定pop方法，从最后拿出一个元素并返回
-	old := *h
+func (minHeap *MinHeap0480) Pop() interface{} { // 绑定pop方法，从最后拿出一个元素并返回
+	old := *minHeap
 	n := len(old)
 	x := old[n-1]
-	*h = old[0 : n-1]
+	*minHeap = old[0 : n-1]
 	return x
 }
 
-func (h *MinHeap0480) Push(x interface{}) { // 绑定push方法，插入新元素
-	*h = append(*h, x.(int))
+func (minHeap *MinHeap0480) Push(x interface{}) { // 绑定push方法，插入新元素
+	*minHeap = append(*minHeap, x.(int))
 }
 
-func (this *MinHeap0480) Peek() interface{} {
-	return (*this)[0]
+func (minHeap *MinHeap0480) Peek() interface{} {
+	return (*minHeap)[0]
 }
