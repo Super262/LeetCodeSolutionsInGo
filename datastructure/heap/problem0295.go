@@ -15,82 +15,82 @@ func Constructor() MedianFinder {
 	return finder
 }
 
-func (this *MedianFinder) AddNum(num int) {
-	if this.maxHeap.Len() == 0 || num <= this.maxHeap.Peek().(int) {
-		heap.Push(this.maxHeap, num)
+func (finder *MedianFinder) AddNum(num int) {
+	if finder.maxHeap.Len() == 0 || num <= finder.maxHeap.Peek().(int) {
+		heap.Push(finder.maxHeap, num)
 	} else {
-		heap.Push(this.minHeap, num)
+		heap.Push(finder.minHeap, num)
 	}
-	this.Balance()
+	finder.Balance()
 }
 
-func (this *MedianFinder) FindMedian() float64 {
-	if this.maxHeap.Len() == this.minHeap.Len() {
-		return float64(this.maxHeap.Peek().(int)+this.minHeap.Peek().(int)) / 2.0
+func (finder *MedianFinder) FindMedian() float64 {
+	if finder.maxHeap.Len() == finder.minHeap.Len() {
+		return float64(finder.maxHeap.Peek().(int)+finder.minHeap.Peek().(int)) / 2.0
 	} else {
-		return float64(this.maxHeap.Peek().(int))
+		return float64(finder.maxHeap.Peek().(int))
 	}
 }
 
-func (this *MedianFinder) Balance() {
-	for this.maxHeap.Len() < this.minHeap.Len() {
-		heap.Push(this.maxHeap, heap.Pop(this.minHeap))
+func (finder *MedianFinder) Balance() {
+	for finder.maxHeap.Len() < finder.minHeap.Len() {
+		heap.Push(finder.maxHeap, heap.Pop(finder.minHeap))
 	}
-	for this.maxHeap.Len() > this.minHeap.Len()+1 {
-		heap.Push(this.minHeap, heap.Pop(this.maxHeap))
+	for finder.maxHeap.Len() > finder.minHeap.Len()+1 {
+		heap.Push(finder.minHeap, heap.Pop(finder.maxHeap))
 	}
 }
 
 type MaxHeap0295 []int // 定义一个类型
 
-func (h MaxHeap0295) Len() int { return len(h) } // 绑定len方法,返回长度
-func (h MaxHeap0295) Less(i, j int) bool { // 绑定less方法
-	return h[i] > h[j] // 如果h[i]<h[j]生成的就是小根堆，如果h[i]>h[j]生成的就是大根堆
+func (maxHeap MaxHeap0295) Len() int { return len(maxHeap) } // 绑定len方法,返回长度
+func (maxHeap MaxHeap0295) Less(i, j int) bool { // 绑定less方法
+	return maxHeap[i] > maxHeap[j] // 如果h[i]<maxHeap[j]生成的就是小根堆，如果h[i]>maxHeap[j]生成的就是大根堆
 }
-func (h MaxHeap0295) Swap(i, j int) { // 绑定swap方法，交换两个元素位置
-	h[i], h[j] = h[j], h[i]
+func (maxHeap MaxHeap0295) Swap(i, j int) { // 绑定swap方法，交换两个元素位置
+	maxHeap[i], maxHeap[j] = maxHeap[j], maxHeap[i]
 }
 
-func (h *MaxHeap0295) Pop() interface{} { // 绑定pop方法，从最后拿出一个元素并返回
-	old := *h
+func (maxHeap *MaxHeap0295) Pop() interface{} { // 绑定pop方法，从最后拿出一个元素并返回
+	old := *maxHeap
 	n := len(old)
 	x := old[n-1]
-	*h = old[0 : n-1]
+	*maxHeap = old[0 : n-1]
 	return x
 }
 
-func (h *MaxHeap0295) Push(x interface{}) { // 绑定push方法，插入新元素
-	*h = append(*h, x.(int))
+func (maxHeap *MaxHeap0295) Push(x interface{}) { // 绑定push方法，插入新元素
+	*maxHeap = append(*maxHeap, x.(int))
 }
 
-func (this *MaxHeap0295) Peek() interface{} {
-	return (*this)[0]
+func (maxHeap *MaxHeap0295) Peek() interface{} {
+	return (*maxHeap)[0]
 }
 
 type MinHeap0295 []int // 定义一个类型
 
-func (h MinHeap0295) Len() int { return len(h) } // 绑定len方法,返回长度
-func (h MinHeap0295) Less(i, j int) bool { // 绑定less方法
-	return h[i] < h[j] // 如果h[i]<h[j]生成的就是小根堆，如果h[i]>h[j]生成的就是大根堆
+func (minHeap MinHeap0295) Len() int { return len(minHeap) } // 绑定len方法,返回长度
+func (minHeap MinHeap0295) Less(i, j int) bool { // 绑定less方法
+	return minHeap[i] < minHeap[j] // 如果h[i]<minHeap[j]生成的就是小根堆，如果h[i]>minHeap[j]生成的就是大根堆
 }
-func (h MinHeap0295) Swap(i, j int) { // 绑定swap方法，交换两个元素位置
-	h[i], h[j] = h[j], h[i]
+func (minHeap MinHeap0295) Swap(i, j int) { // 绑定swap方法，交换两个元素位置
+	minHeap[i], minHeap[j] = minHeap[j], minHeap[i]
 }
 
-func (h *MinHeap0295) Pop() interface{} { // 绑定pop方法，从最后拿出一个元素并返回
-	old := *h
+func (minHeap *MinHeap0295) Pop() interface{} { // 绑定pop方法，从最后拿出一个元素并返回
+	old := *minHeap
 	n := len(old)
 	x := old[n-1]
-	*h = old[0 : n-1]
+	*minHeap = old[0 : n-1]
 	return x
 }
 
-func (h *MinHeap0295) Push(x interface{}) { // 绑定push方法，插入新元素
-	*h = append(*h, x.(int))
+func (minHeap *MinHeap0295) Push(x interface{}) { // 绑定push方法，插入新元素
+	*minHeap = append(*minHeap, x.(int))
 }
 
-func (this *MinHeap0295) Peek() interface{} {
-	return (*this)[0]
+func (minHeap *MinHeap0295) Peek() interface{} {
+	return (*minHeap)[0]
 }
 
 /**
