@@ -1,4 +1,4 @@
-package doublepointers
+package twopointers
 
 func lengthOfLongestSubstring(s string) int {
 	if s == "" {

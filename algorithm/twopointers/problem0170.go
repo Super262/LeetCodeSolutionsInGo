@@ -1,4 +1,4 @@
-package doublepointers
+package twopointers
 
 type TwoSum struct {
 	count map[int]int

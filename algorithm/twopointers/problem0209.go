@@ -1,4 +1,4 @@
-package doublepointers
+package twopointers
 
 func minSubArrayLen(target int, nums []int) int {
 	if nums == nil || len(nums) == 0 {

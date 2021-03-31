@@ -1,4 +1,4 @@
-package doublepointers
+package twopointers
 
 func hasCycle(head *ListNode) bool {
 	if head == nil {

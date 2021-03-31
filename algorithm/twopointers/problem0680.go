@@ -1,4 +1,4 @@
-package doublepointers
+package twopointers
 
 func isPalindrome(charArray []rune, start int, end int) bool {
 	for start <= end {

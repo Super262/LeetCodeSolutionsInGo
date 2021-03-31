@@ -1,4 +1,4 @@
-package doublepointers
+package twopointers
 
 func reverseVowels(s string) string {
 	sArray := []rune(s)

@@ -1,4 +1,4 @@
-package doublepointers
+package twopointers
 
 func moveZeroes(nums []int) {
 	// Minimize the total number of operations!
