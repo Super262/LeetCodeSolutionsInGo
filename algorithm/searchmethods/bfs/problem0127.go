@@ -2,60 +2,84 @@ package bfs
 
 import "strings"
 
-func createMap(wordList []string) map[int][]int {
-	result := make(map[int][]int)
-	wordsArrays := make([][]rune, len(wordList), len(wordList))
-	for i := 0; i < len(wordList); i++ {
-		result[i] = make([]int, 0)
-		wordsArrays[i] = []rune(wordList[i])
-	}
-	dis := 0
-	for p1 := 0; p1 < len(wordList); p1++ {
-		for p2 := p1 + 1; p2 < len(wordList); p2++ {
-			dis = 0
-			if len(wordsArrays[p1]) == len(wordsArrays[p2]) {
-				for i := 0; i < len(wordsArrays[p1]); i++ {
-					if wordsArrays[p1][i] != wordsArrays[p2][i] {
-						dis++
-					}
-				}
-				if dis == 1 {
-					result[p1] = append(result[p1], p2)
-					result[p2] = append(result[p2], p1)
-				}
-			}
-		}
-	}
-	return result
-}
-
 func ladderLength(beginWord string, endWord string, wordList []string) int {
-	wordList = append(wordList, beginWord)
-	wordMap := createMap(wordList)
-	q := make([]int, 1)
-	q[0] = len(wordList) - 1
-	visited := make([]bool, len(wordList), len(wordList))
-	count := 0
-	curLevelSize := 1
-	nextLevelSize := 0
+	wordDict := Set0127{}
+	wordDict.Constructor(&wordList)
+	visited := Set0127{}
+	q := make([]string, 0)
+	q = append(q, beginWord)
+	visited.Add(&beginWord)
+	currentLevelSize := 0
+	pathLen := 0
+	currentNode := ""
 	for len(q) > 0 {
-		count++
-		for curLevelSize > 0 {
-			curNode := q[0]
+		currentLevelSize = len(q)
+		pathLen++
+		for i := 0; i < currentLevelSize; i++ {
+			currentNode = q[0]
 			q = q[1:]
-			curLevelSize--
-			if !visited[curNode] {
-				visited[curNode] = true
-				if strings.Compare(wordList[curNode], endWord) == 0 {
-					return count
-				} else {
-					nextLevelSize += len(wordMap[curNode])
-					q = append(q, wordMap[curNode]...)
+			if strings.Compare(currentNode, endWord) == 0 {
+				return pathLen
+			}
+			for _, candidate := range *getCandidates0127(&currentNode) {
+				if !wordDict.Contains(&candidate) || visited.Contains(&candidate) {
+					continue
 				}
+				q = append(q, candidate)
+				visited.Add(&candidate)
 			}
 		}
-		curLevelSize = nextLevelSize
-		nextLevelSize = 0
 	}
 	return 0
+}
+
+func getCandidates0127(word *string) *[]string {
+	results := make([]string, 0)
+	dict := []rune("abcdefghijklmnopqrstuvwxyz")
+	target := []rune(*word)
+	var prev_val rune
+	for si := range target {
+		for di := range dict {
+			if target[si] == dict[di] {
+				continue
+			}
+			prev_val = target[si]
+			target[si] = dict[di]
+			results = append(results, string(target))
+			target[si] = prev_val
+		}
+	}
+	return &results
+}
+
+type Set0127 struct {
+	data map[string]int
+}
+
+func (s *Set0127) Constructor(wordList *[]string) {
+	for i := range *wordList {
+		s.Add(&(*wordList)[i])
+	}
+}
+
+func (s *Set0127) Contains(key *string) bool {
+	if s.data == nil {
+		s.data = make(map[string]int)
+	}
+	_, ok := s.data[*key]
+	return ok
+}
+
+func (s *Set0127) Remove(key *string) {
+	if s.data == nil {
+		s.data = make(map[string]int)
+	}
+	delete(s.data, *key)
+}
+
+func (s *Set0127) Add(key *string) {
+	if s.data == nil {
+		s.data = make(map[string]int)
+	}
+	s.data[*key] = 1
 }
