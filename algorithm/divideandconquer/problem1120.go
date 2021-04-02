@@ -1,4 +1,4 @@
-package bfs
+package divideandconquer
 
 import "math"
 

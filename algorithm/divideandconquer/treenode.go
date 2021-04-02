@@ -1,4 +1,4 @@
-package bfs
+package divideandconquer
 
 type TreeNode struct {
 	Val   int

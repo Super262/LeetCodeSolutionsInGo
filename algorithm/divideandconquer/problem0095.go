@@ -1,11 +1,5 @@
 package divideandconquer
 
-type TreeNode struct {
-	Val   int
-	Left  *TreeNode
-	Right *TreeNode
-}
-
 func createBST(start int, end int) []*TreeNode {
 	if start > end {
 		return nil
