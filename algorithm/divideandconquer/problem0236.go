@@ -4,6 +4,9 @@ func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
 	if root == nil || q == nil || p == nil {
 		return nil
 	}
+	if p == q {
+		return p
+	}
 	if root == p || q == root {
 		return root
 	}
