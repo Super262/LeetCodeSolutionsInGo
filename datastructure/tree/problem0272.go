@@ -15,16 +15,25 @@ func closestKValues(root *TreeNode, target float64, k int) []int {
 		move_upper(&upperStack)
 	}
 	for i := 0; i < k; i++ {
-		if len(lowerStack) == 0 || (len(upperStack) > 0 && math.Abs(float64(lowerStack[len(lowerStack)-1].Val)-target) > math.Abs(float64(upperStack[len(upperStack)-1].Val)-target)) {
-			result = append(result, upperStack[len(upperStack)-1].Val)
-			move_upper(&upperStack)
-
-		} else {
+		if isLowerCloser(&lowerStack, &upperStack, target) {
 			result = append(result, lowerStack[len(lowerStack)-1].Val)
 			move_lower(&lowerStack)
+		} else {
+			result = append(result, upperStack[len(upperStack)-1].Val)
+			move_upper(&upperStack)
 		}
 	}
 	return result
+}
+
+func isLowerCloser(lowerStack *[]*TreeNode, upperStack *[]*TreeNode, target float64) bool {
+	if len(*lowerStack) == 0 {
+		return false
+	}
+	if len(*upperStack) == 0 {
+		return true
+	}
+	return math.Abs(float64((*lowerStack)[len(*lowerStack)-1].Val)-target) < math.Abs(float64((*upperStack)[len(*upperStack)-1].Val)-target)
 }
 
 func initialize_stack(root *TreeNode, target float64) []*TreeNode {
