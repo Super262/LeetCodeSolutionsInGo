@@ -1,4 +1,4 @@
-package bst
+package tree
 
 func kthSmallest(root *TreeNode, k int) int {
 	if root == nil {
