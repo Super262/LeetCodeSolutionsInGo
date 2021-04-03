@@ -1,4 +1,4 @@
-package backtracking
+package dfs
 
 func swap0046(nums *[]int, a int, b int) {
 	t := (*nums)[a]

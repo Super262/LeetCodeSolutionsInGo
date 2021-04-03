@@ -1,4 +1,4 @@
-package backtracking
+package dfs
 
 func dfsToFill0051(board *[][]rune, colUsed *[]bool, dia45Used *[]bool, dia135Used *[]bool, result *[][]string, curRow int, maxRow int) {
 	if curRow == maxRow {

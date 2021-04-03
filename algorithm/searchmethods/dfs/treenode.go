@@ -1,4 +1,4 @@
-package backtracking
+package dfs
 
 type TreeNode struct {
 	Val   int

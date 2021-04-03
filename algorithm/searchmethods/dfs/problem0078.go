@@ -1,4 +1,4 @@
-package backtracking
+package dfs
 
 func getCombinations0078(nums *[]int, startIndex int, endIndex int, tempResult *[]int, result *[][]int) {
 	if startIndex < endIndex {

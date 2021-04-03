@@ -1,4 +1,4 @@
-package backtracking
+package dfs
 
 func getCombinations0077(n int, start int, targetLen int, result *[][]int, tempPath *[]int) {
 	if targetLen == 0 {

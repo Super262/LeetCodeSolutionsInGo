@@ -1,4 +1,4 @@
-package backtracking
+package dfs
 
 func getCombinations0216(targetSum int, minAddend int, maxAddend int, currentCount int, targetCount int, tempResult *[]int, result *[][]int) {
 	if currentCount == targetCount {
