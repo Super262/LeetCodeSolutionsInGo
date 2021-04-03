@@ -13,8 +13,8 @@ func subsets(nums []int) [][]int {
 }
 
 func helper0078(nums *[]int, index int, subset *[]int, results *[][]int) {
-	subsetCopied := make([]int, 0)
-	subsetCopied = append(subsetCopied, *subset...)
+	subsetCopied := make([]int, len(*subset), len(*subset))
+	copy(subsetCopied, *subset)
 	*results = append(*results, subsetCopied)
 	for i := index; i < len(*nums); i++ {
 		*subset = append(*subset, (*nums)[i])
