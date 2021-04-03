@@ -7,20 +7,20 @@ func closestKValues(root *TreeNode, target float64, k int) []int {
 	if root == nil {
 		return result
 	}
-	lowerStack := initialize_stack(root, target)
+	lowerStack := initializeStack(root, target)
 	upperStack := append([]*TreeNode{}, lowerStack...)
 	if float64(lowerStack[len(lowerStack)-1].Val) > target {
-		move_lower(&lowerStack)
+		moveLower(&lowerStack)
 	} else {
-		move_upper(&upperStack)
+		moveUpper(&upperStack)
 	}
 	for i := 0; i < k; i++ {
 		if isLowerCloser(&lowerStack, &upperStack, target) {
 			result = append(result, lowerStack[len(lowerStack)-1].Val)
-			move_lower(&lowerStack)
+			moveLower(&lowerStack)
 		} else {
 			result = append(result, upperStack[len(upperStack)-1].Val)
-			move_upper(&upperStack)
+			moveUpper(&upperStack)
 		}
 	}
 	return result
@@ -36,7 +36,7 @@ func isLowerCloser(lowerStack *[]*TreeNode, upperStack *[]*TreeNode, target floa
 	return math.Abs(float64((*lowerStack)[len(*lowerStack)-1].Val)-target) < math.Abs(float64((*upperStack)[len(*upperStack)-1].Val)-target)
 }
 
-func initialize_stack(root *TreeNode, target float64) []*TreeNode {
+func initializeStack(root *TreeNode, target float64) []*TreeNode {
 	stack := make([]*TreeNode, 0)
 	for root != nil {
 		stack = append(stack, root)
@@ -49,7 +49,7 @@ func initialize_stack(root *TreeNode, target float64) []*TreeNode {
 	return stack
 }
 
-func move_upper(stack *[]*TreeNode) {
+func moveUpper(stack *[]*TreeNode) {
 	node := (*stack)[len(*stack)-1]
 	if node.Right == nil {
 		*stack = (*stack)[0 : len(*stack)-1]
@@ -66,7 +66,7 @@ func move_upper(stack *[]*TreeNode) {
 	}
 }
 
-func move_lower(stack *[]*TreeNode) {
+func moveLower(stack *[]*TreeNode) {
 	node := (*stack)[len(*stack)-1]
 	if node.Left == nil {
 		*stack = (*stack)[0 : len(*stack)-1]
