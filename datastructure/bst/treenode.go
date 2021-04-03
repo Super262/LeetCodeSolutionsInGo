@@ -1,4 +1,4 @@
-package divideandconquer
+package bst
 
 type TreeNode struct {
 	Val   int
