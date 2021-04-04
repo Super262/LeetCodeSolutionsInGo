@@ -1,33 +1,28 @@
 package dfs
 
-func swap0046(nums *[]int, a int, b int) {
-	t := (*nums)[a]
-	(*nums)[a] = (*nums)[b]
-	(*nums)[b] = t
-}
-
-func getPermutations0046(nums *[]int, start int, end int, result *[][]int) {
-	if start == end-1 {
-		temp := append([]int{}, *nums...)
-		*result = append(*result, temp)
-	} else {
-		for i := start; i < end; i++ {
-			swap0046(nums, i, start)
-			getPermutations0046(nums, start+1, end, result)
-			swap0046(nums, i, start)
-		}
-	}
-}
-
 func permute(nums []int) [][]int {
-	result := make([][]int, 0)
-	if nums == nil {
-		return result
+	results := make([][]int, 0, 0)
+	permutation := make([]int, 0, len(nums))
+	visited := make([]bool, len(nums), len(nums))
+	dfs0046(&nums, &permutation, &visited, &results)
+	return results
+}
+
+func dfs0046(nums, permutation *[]int, visited *[]bool, results *[][]int) {
+	if len(*permutation) == len(*nums) {
+		permutationCopied := make([]int, len(*nums), len(*nums))
+		copy(permutationCopied, *permutation)
+		*results = append(*results, permutationCopied)
+		return
 	}
-	numsLen := len(nums)
-	if numsLen == 0 {
-		return result
+	for i := range *nums {
+		if (*visited)[i] {
+			continue
+		}
+		(*visited)[i] = true
+		*permutation = append(*permutation, (*nums)[i])
+		dfs0046(nums, permutation, visited, results)
+		*permutation = (*permutation)[0 : len(*permutation)-1]
+		(*visited)[i] = false
 	}
-	getPermutations0046(&nums, 0, numsLen, &result)
-	return result
 }
