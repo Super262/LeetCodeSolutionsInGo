@@ -1,37 +1,33 @@
 package dfs
 
-import (
-	"sort"
-)
-
-func getCombinations0039(nums *[]int, numsLen int, startIndex int, target int, tempResult *[]int, result *[][]int) {
-	for i := startIndex; i < numsLen; i++ {
-		if (*nums)[i] == target {
-			*tempResult = append(*tempResult, (*nums)[i])
-			*result = append(*result, append([]int{}, *tempResult...))
-			*tempResult = (*tempResult)[0 : len(*tempResult)-1]
-		} else if (*nums)[i] < target {
-			*tempResult = append(*tempResult, (*nums)[i])
-			getCombinations0039(nums, numsLen, i, target-(*nums)[i], tempResult, result)
-			*tempResult = (*tempResult)[0 : len(*tempResult)-1]
-		}
-	}
-}
+import "sort"
 
 func combinationSum(candidates []int, target int) [][]int {
-	result := make([][]int, 0, 0)
-	if candidates == nil || target == 0 {
-		return result
+	candidatesCopied := make([]int, len(candidates), len(candidates))
+	copy(candidatesCopied, candidates)
+	sort.Ints(candidatesCopied)
+	results := make([][]int, 0)
+	combination := make([]int, 0, len(candidatesCopied))
+	dfs0039(&candidatesCopied, &combination, 0, target, &results)
+	return results
+}
+
+func dfs0039(candidates, combination *[]int, startIndex, target int, results *[][]int) {
+	if target < 0 {
+		return
 	}
-	sort.Ints(candidates)
-	numsLen := len(candidates)
-	if numsLen == 0 {
-		return result
+	if target == 0 {
+		combinationCopied := make([]int, len(*combination), len(*combination))
+		copy(combinationCopied, *combination)
+		*results = append(*results, combinationCopied)
+		return
 	}
-	if target < candidates[0] {
-		return result
+	for i := startIndex; i < len(*candidates); i++ {
+		if target < (*candidates)[i] {
+			return
+		}
+		*combination = append(*combination, (*candidates)[i])
+		dfs0039(candidates, combination, i, target-(*candidates)[i], results)
+		*combination = (*combination)[0 : len(*combination)-1]
 	}
-	tempResult := make([]int, 0, 0)
-	getCombinations0039(&candidates, numsLen, 0, target, &tempResult, &result)
-	return result
 }
