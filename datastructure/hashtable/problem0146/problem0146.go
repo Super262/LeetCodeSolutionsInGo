@@ -1,4 +1,4 @@
-package hashtable
+package problem0146
 
 type LRUCache struct {
 	capacity int
