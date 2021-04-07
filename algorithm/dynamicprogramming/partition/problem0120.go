@@ -1,27 +1,20 @@
 package partition
 
 func minimumTotal(triangle [][]int) int {
-	memo := make([][]int, len(triangle), len(triangle))
-	maxWidth := len(triangle[len(triangle)-1])
-	for i := range memo {
-		memo[i] = make([]int, maxWidth, maxWidth)
-		for j := range memo[i] {
-			memo[i][j] = -1
+	n := len(triangle)
+	dp := make([][]int, n, n)
+	for i := range dp {
+		dp[i] = make([]int, i+1, i+1)
+	}
+	for i := 0; i < n; i++ {
+		dp[n-1][i] = triangle[n-1][i]
+	}
+	for i := n - 2; i >= 0; i-- {
+		for j := range dp[i] {
+			dp[i][j] = getMin0120(dp[i+1][j], dp[i+1][j+1]) + triangle[i][j]
 		}
 	}
-	return dpToGetMinimal0120(&triangle, &memo, 0, 0)
-}
-
-func dpToGetMinimal0120(triangle, memo *[][]int, y, x int) int {
-	if y == len(*triangle) {
-		return 0
-	}
-	if (*memo)[y][x] != -1 {
-		return (*memo)[y][x]
-	}
-	currentSum := (*triangle)[y][x] + getMin0120(dpToGetMinimal0120(triangle, memo, y+1, x), dpToGetMinimal0120(triangle, memo, y+1, x+1))
-	(*memo)[y][x] = currentSum
-	return currentSum
+	return dp[0][0]
 }
 
 func getMin0120(a, b int) int {
