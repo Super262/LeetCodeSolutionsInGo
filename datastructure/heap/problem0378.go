@@ -1,4 +1,4 @@
-package others
+package heap
 
 import (
 	"container/heap"
