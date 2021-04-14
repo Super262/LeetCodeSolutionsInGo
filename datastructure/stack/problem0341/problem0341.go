@@ -1,4 +1,4 @@
-package stack
+package problem0341
 
 import "math"
 
