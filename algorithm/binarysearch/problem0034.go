@@ -29,6 +29,7 @@ func searchRange(nums []int, target int) []int {
 		result[1] = firstIndex
 	}
 	if result[0] != -1 {
+		// 巧妙之处，选择(target+1)作为下一个查找目标
 		result[1] = findFirst(&nums, target+1) - 1
 	}
 	return result
