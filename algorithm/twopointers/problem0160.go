@@ -1,4 +1,4 @@
-package linkedlist
+package twopointers
 
 func getIntersectionNode(headA, headB *ListNode) *ListNode {
 	if headA == nil || headB == nil {
@@ -11,13 +11,12 @@ func getIntersectionNode(headA, headB *ListNode) *ListNode {
 		p2 = p2.Next
 		if p1 == nil && p2 == nil {
 			return nil
-		} else {
-			if p1 == nil {
-				p1 = headB
-			}
-			if p2 == nil {
-				p2 = headA
-			}
+		}
+		if p1 == nil {
+			p1 = headB
+		}
+		if p2 == nil {
+			p2 = headA
 		}
 	}
 	return p1
