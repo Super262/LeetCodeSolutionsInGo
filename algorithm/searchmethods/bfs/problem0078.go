@@ -1,10 +1,13 @@
 package bfs
 
+import "sort"
+
 func subsets(nums []int) [][]int {
 	queue := make([][]int, 0)
 	if nums == nil || len(nums) == 0 {
 		return queue
 	}
+	sort.Ints(nums)
 	queue = append(queue, make([]int, 0))
 	index := 0
 	for index < len(queue) {
